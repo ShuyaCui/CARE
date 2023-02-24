@@ -1,5 +1,5 @@
 library(Rssa)
-load("./nPar_calculation.R")
+source("./nPar_calculation.R")
 # load the activity data
 load("./act_data_list.RData")
 # # ###############################################
