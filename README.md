@@ -16,3 +16,6 @@ Individual accelerometer records should be saved in a csv file, with two columns
 
 ### Calculate CARE
 **CARE_calculation.R**: Rscript to calculate CARE and relative amplitude based on preprocessed accelerometer data list.
+
+### Plot the raw activity signal and SSA subsignals
+**plot_SSA_subsignals.R**: Rscript to plot raw activity signal and SSA subsignals from the preprocessed accelerometer data.
