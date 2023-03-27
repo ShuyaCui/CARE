@@ -21,8 +21,9 @@ for (i in 1:length(act_data_list)){
     s.act = ssa(act$act, L = 1440, kind = "1d-ssa")
     ssa_care0[i] = sum(contributions(s.act)[2:3])
    # energy of behavioral noise
-    ssa_behavioral_energy = sum(contributions(s.act)[4:length(contributions(s.act))])
+    ssa_behavioral_energy[i] = sum(contributions(s.act)[4:length(contributions(s.act))])
 }
-
-write.csv(ssa_care0, file="./results/CARE_0.csv", row.names=F)
-write.csv(npar_act, file="./results/nonparametric_variables.csv", row.names=F)
+res = cbind(ssa_care0, ssa_behavioral_energy, npar_act)
+res = as.data.frame(res)
+colnames(res) = c("CARE", "SSA_behavioral_energy","IS", "IV", "RA", "L5", "L5_starttime", "M10", "M10_starttime")
+write.csv(res, file="./results/example.csv", row.names=T)
