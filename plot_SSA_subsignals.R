@@ -1,11 +1,18 @@
 #### use data from sample #1 ####
 act = act_data_list[[1]]$act
 s.act = ssa(act, L = 1440, kind = "1d-ssa")
+idx_24hr = c()
+for(j in 2:length(contributions(s.act))){
+    if(abs(period_estimate(s.act,j)-1440) < 10){
+        idx_24hr = c(idx_24hr, j)
+     }
+}
 base = Rssa::reconstruct(s.act, groups = list(1))
 base = base$F1
-cc <- Rssa::reconstruct(s.act, groups = list(c(2,3)))
+cc <- Rssa::reconstruct(s.act, groups = list(idx_24hr))
 cc <- cc$F1
-cc_1 <- Rssa::reconstruct(s.act, groups = list(4:length(contributions(s.act))
+tmp_idx=2:length(contributions(s.act))
+cc_1 <- Rssa::reconstruct(s.act, groups = list(tmp_idx[-idx_24hr]))
 cc_1 <- cc_1$F1
 # Plot the raw activity signal and SSA subsignals on the first day
 tmp = cbind((1:1440)/60, act[1:1440], cc[1:1440], cc_1[1:1440], base[1:1440])
