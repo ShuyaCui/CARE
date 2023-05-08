@@ -12,6 +12,13 @@ for (i in 1:length(act_data_list)){
 colnames(npar_act) = c("IS", "IV", "RA", "L5", "L5_starttime", "M10", "M10_starttime")
 npar_act = as.data.frame(npar_act)
 
+## calculate period function
+period_estimate <- function(ssa.output, index){
+  per <- spec.pgram(Rssa::reconstruct(ssa.output, groups = list(index))$F1, )
+  per_max <- per$freq[which.max(per$spec)]
+  return(round(1/per_max))
+}
+
 # calculate CARE by SSA
 ssa_care0 = c()
 ssa_behavioral_energy = c()
@@ -21,7 +28,7 @@ for (i in 1:length(act_data_list)){
     s.act = ssa(act$act, L = 1440, kind = "1d-ssa")
     idx_24hr = c()
     for(j in 2:length(contributions(s.act))){
-         if(abs(period_estimate(s.act,j)-1440) < 10){
+         if(abs(period_estimate(s.act,j)-1440) < 240){
            idx_24hr = c(idx_24hr, j)
          }
     }
